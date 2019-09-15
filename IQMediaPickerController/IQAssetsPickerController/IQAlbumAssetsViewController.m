@@ -317,27 +317,25 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    IQAssetsCell *cell = (IQAssetsCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    PHAsset *asset = self.fetchResult[indexPath.row];
-    
-    if ([self.assetController.selectedItems containsObject:asset])
-    {
-        [self.assetController.selectedItems removeObject:asset];
-        cell.checkmarkView.alpha = 0.0;
-    }
-    else
-    {
-        [self.assetController.selectedItems addObject:asset];
-        cell.checkmarkView.alpha = 1.0;
-    }
-    
-    if (self.assetController.allowsPickingMultipleItems == NO)
-    {
-        [self.assetController sendFinalSelectedAssets];
-    }
-
-    [self updateSelectedCountAnimated:YES];
+   IQAssetsCell cell = (IQAssetsCell )[collectionView cellForItemAtIndexPath:indexPath];
+   PHAsset *asset = self.fetchResult[indexPath.row];
+   NSInteger maxItem = self.assetController.maximumItemCount;
+   NSInteger selectedItems = self.assetController.selectedItems.count;
+   if ([self.assetController.selectedItems containsObject:asset])
+   {
+       [self.assetController.selectedItems removeObject:asset];
+       cell.checkmarkView.alpha = 0.0;
+   }
+   else if (maxItem > selectedItems)
+   {
+       [self.assetController.selectedItems addObject:asset];
+       cell.checkmarkView.alpha = 1.0;
+   }
+   if (self.assetController.allowsPickingMultipleItems == NO)
+   {
+       [self.assetController sendFinalSelectedAssets];
+   }
+   [self updateSelectedCountAnimated:YES];
 }
 
 //-(void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView
