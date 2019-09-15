@@ -317,7 +317,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-   IQAssetsCell cell = (IQAssetsCell )[collectionView cellForItemAtIndexPath:indexPath];
+   IQAssetsCell *cell = (IQAssetsCell *)[collectionView cellForItemAtIndexPath:indexPath];
    PHAsset *asset = self.fetchResult[indexPath.row];
    NSInteger maxItem = self.assetController.maximumItemCount;
    NSInteger selectedItems = self.assetController.selectedItems.count;
